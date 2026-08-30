@@ -348,15 +348,7 @@
           <input type="file" id="aiFileUpload" style="display:none" onchange="handleAiFile(event)" multiple>
           <span class="fname" id="aiFileName">No file selected</span>
         </div>
-        <div class="ai-tools">
-          <button onclick="aiQuick('Write a Python function to sort a list')">💻 Code</button>
-          <button onclick="aiQuick('Translate: Hello, how are you? to Spanish')">🌍 Translate</button>
-          <button onclick="aiQuick('Explain quantum computing simply')">💡 Explain</button>
-          <button onclick="aiQuick('Write a professional email about a project delay')">📧 Email</button>
-          <button onclick="aiQuick('What is 234 × 56?')">🧮 Math</button>
-          <button onclick="aiQuick('Write a haiku about coding at 3am')">✍️ Creative</button>
-          <button onclick="aiQuick('Analyze the pros and cons of React vs Vue')">🔍 Analyze</button>
-        </div>
+
         <div class="ai-input">
           <input type="text" id="aiInput" placeholder="Ask anything... (Enter to send)" onkeydown="if(event.key==='Enter')sendAI()">
           <button onclick="sendAI()">
@@ -1959,10 +1951,38 @@ const FMT = {
   mobi: { cat:'ebook', to:['txt','pdf'], note:'Kindle MOBI: limited support. EPUB recommended.' },
   azw:  { cat:'ebook', to:['txt','pdf'], note:'Amazon AZW: DRM-protected files cannot be converted.' },
   fb2:  { cat:'ebook', to:['txt','html','epub','pdf'], note:'FictionBook — XML-based, good conversion support.' },
+  // CAD / AutoCAD
+  dwg:  { cat:'cad', to:['dxf','pdf','png','jpg','svg'], note:'AutoCAD DWG: proprietary binary format. Text/layer extraction and basic conversion. For full editing, use AutoCAD or FreeCAD.' },
+  dxf:  { cat:'cad', to:['dwg','pdf','png','jpg','svg','txt'], note:'AutoCAD DXF: open interchange format. Better browser compatibility than DWG.' },
+  dwt:  { cat:'cad', to:['dxf','pdf','png','jpg'], note:'AutoCAD Drawing Template — same as DWG, used as template.' },
+  dws:  { cat:'cad', to:['dxf','pdf','png','jpg'], note:'AutoCAD Drawing Standards — validation format.' },
+  ifc:  { cat:'cad', to:['txt','csv','json'], note:'Industry Foundation Classes (BIM). Text/metadata extraction from building models.' },
+  step: { cat:'cad', to:['txt','json'], note:'STEP/STP: 3D CAD exchange format. Metadata extraction only.' },
+  stl:  { cat:'cad', to:['obj','txt'], note:'STL: 3D printing mesh format. Vertex/face count and basic info.' },
+  obj:  { cat:'cad', to:['stl','txt'], note:'Wavefront OBJ: 3D mesh format. Vertex/face data extraction.' },
+  '3ds':{ cat:'cad', to:['obj','txt'], note:'3D Studio Max format. Basic mesh data extraction.' },
+  skp:  { cat:'cad', to:['obj','txt'], note:'SketchUp: 3D model format. Basic extraction.' },
+  fbx:  { cat:'cad', to:['obj','txt'], note:'Autodesk FBX: 3D animation format. Basic mesh extraction.' },
+
+  // Adobe Creative Suite
+  psd:  { cat:'adobe', to:['png','jpg','webp','pdf','tiff','bmp'], note:'Photoshop PSD: full layer-aware export. Flattened to PNG/JPG for web. Layers preserved in PDF.' },
+  ai:   { cat:'adobe', to:['svg','pdf','png','jpg','eps'], note:'Adobe Illustrator AI: vector export to SVG/PDF. Rasterization for PNG/JPG.' },
+  indd: { cat:'adobe', to:['pdf','txt'], note:'Adobe InDesign INDD: page layout. Text extraction and PDF export. Complex layouts require InDesign.' },
+  xd:   { cat:'adobe', to:['png','jpg','svg','pdf'], note:'Adobe XD: UI/UX design. Frame export to images and SVG.' },
+  aep:  { cat:'adobe', to:['txt'], note:'After Effects AEP: project file. Text/metadata extraction only.' },
+  prproj:{ cat:'adobe', to:['txt'], note:'Premiere Pro PRPROJ: project file. Text/metadata extraction only.' },
+  fig:  { cat:'adobe', to:['svg','png','jpg','pdf'], note:'Figma design file. Export to images and SVG. Full editing requires Figma.' },
+  sketch:{ cat:'adobe', to:['svg','png','jpg','pdf'], note:'Sketch design file. Export to images and SVG. Full editing requires Sketch.' },
+  afdesign:{ cat:'adobe', to:['pdf','png','jpg','svg'], note:'Affinity Designer. Export to images and PDF.' },
+  afphoto:{ cat:'adobe', to:['png','jpg','webp','pdf','tiff'], note:'Affinity Photo. Export to images similar to PSD.' },
+  cdr:  { cat:'adobe', to:['svg','pdf','png','jpg','ai'], note:'CorelDRAW CDR: vector format. Export to SVG/PDF. Full editing requires CorelDRAW.' },
+  wmf:  { cat:'adobe', to:['svg','png','jpg','pdf'], note:'Windows Metafile: vector/raster hybrid. Conversion to SVG/PNG.' },
+  emf:  { cat:'adobe', to:['svg','png','jpg','pdf'], note:'Enhanced Metafile: Windows vector format. Conversion to SVG/PNG.' },
+
 };
 
-const CAT_ICONS = { image:'🖼️', document:'📄', spreadsheet:'📊', presentation:'📽️', audio:'🎵', video:'🎬', data:'📦', code:'💻', subtitle:'📝', archive:'📦', ebook:'📚', unknown:'❓' };
-const CAT_NAMES = { image:'Image', document:'Document', spreadsheet:'Spreadsheet', presentation:'Presentation', audio:'Audio', video:'Video', data:'Data', code:'Code', subtitle:'Subtitle', archive:'Archive', ebook:'Ebook', unknown:'Unknown' };
+const CAT_ICONS = { image:'🖼️', document:'📄', spreadsheet:'📊', presentation:'📽️', audio:'🎵', video:'🎬', data:'📦', code:'💻', subtitle:'📝', archive:'📦', ebook:'📚', cad:'🏗️', adobe:'🎨', unknown:'❓' };
+const CAT_NAMES = { image:'Image', document:'Document', spreadsheet:'Spreadsheet', presentation:'Presentation', audio:'Audio', video:'Video', data:'Data', code:'Code', subtitle:'Subtitle', archive:'Archive', ebook:'Ebook', cad:'CAD / AutoCAD', adobe:'Adobe Creative', unknown:'Unknown' };
 
 // Option templates per category pair
 function getOpts(srcCat, srcExt, tgtExt) {
