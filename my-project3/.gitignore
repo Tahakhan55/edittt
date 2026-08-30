@@ -1,0 +1,6 @@
+.freebuff/
+node_modules/
+*.log
+*.log.err
+.env
+.env.local
