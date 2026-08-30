@@ -28,11 +28,19 @@ const server = http.createServer(async (req, res) => {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + TABI_KEY
           },
-          body: body
+          body: body,
+          signal: AbortSignal.timeout(60000)
         });
         const data = await resp.text();
+        // If upstream returns non-JSON (e.g. HTML error page), return friendly error
+        let json;
+        try { json = JSON.parse(data); } catch(e) {
+          res.writeHead(502, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: { message: 'AI service returned an invalid response. Try again.', type: 'upstream_error' } }));
+          return;
+        }
         res.writeHead(resp.status, { 'Content-Type': 'application/json' });
-        res.end(data);
+        res.end(JSON.stringify(json));
       } catch (e) {
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: e.message }));
