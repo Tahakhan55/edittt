@@ -3,7 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>edittt — Universal AI Assistant & Professional File Tools</title>
+  <title>edittt — Free AI Image Editor, File Converter & Assistant | No Sign-up</title>
+  <meta name="description" content="edittt is a free, unlimited AI assistant and professional file editor. Edit images like Reve, convert 100+ formats, chat with Claude AI, OCR, PDF editing — all in your browser. No sign-up, no limits.">
+  <meta name="keywords" content="edittt, edit, image editor, AI assistant, file converter, PDF editor, OCR, free AI, photo editor, text editor, image to text, AI chat, Claude, GPT, free online tools, edit image, convert file, remove background, enhance image, AI image editing, professional photo editing, free photo editor online, best AI tools 2026, unlimited AI, no sign up AI, rapcut, reve, edititt, edit t, edditt, editit, editttt, eddittt">
+  <meta name="author" content="Tahakhan">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://edittt.web.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="edittt — Free AI Image Editor, File Converter & Assistant">
+  <meta property="og:description" content="Edit images like Reve, convert 100+ formats, chat with Claude AI, OCR, PDF editing — all free, all in your browser.">
+  <meta property="og:url" content="https://edittt.web.app/">
+  <meta property="og:site_name" content="edittt">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="edittt — Free AI Image Editor, File Converter & Assistant">
+  <meta name="twitter:description" content="Edit images, convert files, chat with AI — all free, all in your browser.">
+  <meta name="theme-color" content="#7c3aed">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "edittt",
+    "alternateName": ["edititt", "edit t", "edditt", "editit", "editttt", "eddittt", "edittt AI", "edittt editor"],
+    "url": "https://edittt.web.app/",
+    "description": "Free unlimited AI assistant and professional file editor. Edit images, convert 100+ formats, chat with Claude AI, OCR, PDF editing — all in your browser.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": ["AI Chat with Claude", "Image Editor", "File Converter", "PDF Editor", "OCR Scanner", "Document Editor", "Background Removal", "Image Enhancement", "Text Recognition", "Format Conversion"]
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
@@ -566,6 +598,14 @@
         <div style="margin-bottom:16px">
           <div style="font-size:12px;color:var(--muted);margin-bottom:8px;text-align:center;font-weight:600">SUGGESTED OUTPUT FORMATS</div>
           <div id="cvSugs" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center"></div>
+        </div>
+
+        <!-- ALL available formats -->
+        <div style="margin-bottom:16px">
+          <div id="cvAllFormats"></div>
+        </div>
+
+        <div style="margin-bottom:16px">
         </div>
 
         <!-- Dynamic options panel -->
@@ -1988,6 +2028,36 @@ function cvUpload(e) {
   if (info && info.note && info.to.length > 0) {
     document.getElementById('cvNote').innerHTML = 'ℹ️ ' + info.note;
     document.getElementById('cvNote').classList.remove('hidden');
+  }
+
+  // Show ALL formats as a complete list
+  var allDiv = document.getElementById('cvAllFormats');
+  if (allDiv) {
+    var allCats = {};
+    for (var fmt in FMT) {
+      if (fmt === ext) continue;
+      var fi = FMT[fmt];
+      if (!allCats[fi.cat]) allCats[fi.cat] = [];
+      allCats[fi.cat].push(fmt);
+    }
+    var allHtml = '<div style="font-size:12px;color:var(--muted);margin:20px 0 10px;font-weight:600;text-transform:uppercase">All Available Formats (' + Object.keys(FMT).length + '+)</div>';
+    for (var c in allCats) {
+      allHtml += '<div style="margin-bottom:12px"><div style="font-size:11px;color:var(--acc);font-weight:700;margin-bottom:6px">' + (CAT_ICONS[c]||'') + ' ' + (CAT_NAMES[c]||c).toUpperCase() + '</div><div style="display:flex;flex-wrap:wrap;gap:5px">';
+      allCats[c].sort().forEach(function(f) {
+        var canConvert = info && info.to && info.to.includes(f);
+        var label = f.toUpperCase() + (canConvert ? ' ✓' : '');
+        var sty = 'font-size:11px;padding:4px 10px;' + (canConvert ? 'border-color:var(--acc);color:var(--acc)' : 'opacity:.6');
+        allHtml += '<button class="tbtn" style="' + sty + '" data-fmt="' + f + '">' + label + '</button>';
+      });
+      // Add click handlers after innerHTML is set
+      setTimeout(function() {
+        document.querySelectorAll('#cvAllFormats .tbtn[data-fmt]').forEach(function(btn) {
+          btn.onclick = function() { cvPickTarget(this.dataset.fmt); };
+        });
+      }, 100);
+      allHtml += '</div></div>';
+    }
+    allDiv.innerHTML = allHtml;
   }
 }
 
