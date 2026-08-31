@@ -13,20 +13,7 @@
       "dest": "/api/chat.js"
     },
     {
-      "src": "/sitemap.xml",
-      "dest": "/public/sitemap.xml"
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "/public/robots.txt"
-    },
-    {
-      "src": "/favicon.svg",
-      "dest": "/public/favicon.svg"
-    },
-    {
-      "src": "/logo.svg",
-      "dest": "/public/logo.svg"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
@@ -40,18 +27,6 @@
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
-    },
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml" }
-      ]
-    },
-    {
-      "source": "/robots.txt",
-      "headers": [
-        { "key": "Content-Type", "value": "text/plain" }
       ]
     }
   ]
