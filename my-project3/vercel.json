@@ -2,12 +2,6 @@
   "version": 2,
   "name": "edittt",
   "public": true,
-  "builds": [
-    {
-      "src": "api/chat.js",
-      "use": "@vercel/node"
-    }
-  ],
   "routes": [
     {
       "src": "/api/chat",
