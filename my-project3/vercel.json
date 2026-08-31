@@ -8,6 +8,10 @@
       "dest": "/api/chat.js"
     },
     {
+      "src": "/google011b210fea53a118.html",
+      "dest": "/api/verify.js"
+    },
+    {
       "handle": "filesystem"
     },
     {

@@ -4,3 +4,5 @@ node_modules/
 *.log.err
 .env
 .env.local
+
+.vercel
