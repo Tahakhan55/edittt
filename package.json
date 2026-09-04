@@ -1,0 +1,7 @@
+{
+  "name": "edittt",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "cp -r public/* . 2>/dev/null || true"
+  }
+}
