@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://app.edittt.com/sitemap.xml
+Sitemap: https://edittt.vercel.app/sitemap.xml
